@@ -1,0 +1,24 @@
+import plotly.express as px
+import geopandas as gpd
+import shapely.geometry
+import numpy as np
+
+url = 'https://opendata.arcgis.com/datasets/aa4b6a83ce584783be74696b266aa526_5.geojson'
+# source = https://geohub.lacity.org/datasets/lacounty::golf-courses/about
+df = gpd.read_file(url)
+
+fig = px.scatter_mapbox(df
+                        ,lat=df.geometry.y
+                        ,lon=df.geometry.x
+                        ,hover_name="Name"
+                        ,zoom=9
+                        ,mapbox_style='carto-positron'
+                       )
+
+fig.update_layout(autosize=False
+                  ,margin=dict(r=0, l=0, t=0, b=0)
+                 )
+
+fig.show()
+
+fig.write_html("sdr_labs_sample.html")
